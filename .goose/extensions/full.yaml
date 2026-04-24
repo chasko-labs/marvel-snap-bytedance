@@ -1,7 +1,6 @@
-# marvel-snap project extensions — lighter set for this project
-# qdrant + valkey use streamable_http transport → connect directly to
-# persistent heraldstack-infra MCP endpoints, zero startup lag
-# github + context7 remain stdio (no persistent HTTP endpoint for these)
+# marvel-snap project extensions — lean default set for first implementation work
+# this default profile is intentionally local-first and issue-friendly:
+# builtins + github only, no memory or docs MCPs unless the task actually needs them
 #
 # run scripts/snap-setup.sh to verify infra is up before starting a session
 
@@ -30,31 +29,3 @@ extensions:
     cmd: /home/bryanchasko/code/heraldstack/heraldstack-mcp/launchers/core/github.sh
     args: []
     timeout: 300
-
-  # --- docs ---
-
-  context7:
-    enabled: true
-    type: stdio
-    name: context7
-    cmd: /home/bryanchasko/code/heraldstack/heraldstack-mcp/launchers/core/context7.sh
-    args: []
-    timeout: 300
-
-  # --- memory (streamable_http → persistent heraldstack-infra endpoints) ---
-
-  qdrant-shared:
-    enabled: true
-    type: streamable_http
-    name: qdrant-shared
-    description: qdrant shared-knowledge collection via persistent MCP endpoint
-    uri: http://host.docker.internal:8102/mcp/
-    timeout: 300
-
-  valkey:
-    enabled: true
-    type: streamable_http
-    name: valkey
-    description: valkey cache via persistent MCP endpoint
-    uri: http://host.docker.internal:8110/mcp
-    timeout: 120
